@@ -3,11 +3,10 @@ function playerPlay() {
         playerSelection = prompt("Please choose rock paper or scissors").toLowerCase();
 
         if (playerSelection === 'rock' || playerSelection === 'paper' || playerSelection === 'scissors') {
-                //run game function maybe?
-                alert(`You selected ${playerSelection}`)
-                return playerSelection
+                alert(`You selected ${playerSelection}`);
+                return playerSelection;
         } else {
-                alert(`${playerSelection} is not a valid selection.`)
+                alert(`${playerSelection} is not a valid selection.`);
         }
 }
 
@@ -16,12 +15,15 @@ function computerPlay() {
 
         switch (computerSelection) {
                 case 1:
+                        alert('Computer has selected rock');
                         return 'rock';
                         break;
                 case 2: 
+                        alert('Computer has selected paper');
                         return 'paper'; 
                         break;
                 case 3:
+                        alert('Computer has selected scissors');
                         return 'scissors';
                         break;
         }
@@ -31,49 +33,73 @@ function computerPlay() {
 function rockPaperScissors(playerSelection, computerSelection) {
         switch (playerSelection) {
                 case 'rock':
-                        playerRock(computerSelection);
-                        break;
+                        return playerRock(computerSelection);
                 case 'paper':
-                        playerPaper(computerSelection);
-                        break;
+                        return playerPaper(computerSelection);
                 case 'scissors':
-                        playerScissors(computerSelection);
-                        break;
+                        return playerScissors(computerSelection);
         }
 }
 
 function playerRock(computerSelection) {
         if (computerSelection === 'rock') {
-                console.log('tie');
+                return 'tie';
         } else if (computerSelection === 'scissors') {
-                console.log('You win');
+                return 'You win';
         } else {
-                console.log('You lose');
+                return 'You lose';
         }
 }
 
 function playerPaper(computerSelection) {
         if (computerSelection === 'paper') {
-                console.log('tie');
+                return 'tie';
         } else if (computerSelection === 'rock') {
-                console.log('You win');
+                return 'You win';
         } else {
-                console.log('You lose');
+                return 'You lose';
         }
 }
 
 function playerScissors(computerSelection) {
         if (computerSelection === 'scissors') {
-                console.log('tie');
+                return 'tie';
         } else if (computerSelection === 'paper') {
-                console.log('You win');
+                return 'You win';
         } else {
-                console.log('You lose');
+                return 'You lose';
         }
 }
 
+function scoring(playerScore, computerScore) {
+        if (playerScore === computerScore) {
+                return `Computer: ${computerScore} Player: ${playerScore} TIE`;
+        } else if (playerScore > computerScore) {
+                return `Computer: ${computerScore} Player: ${playerScore} You have won`;
+        } else{
+                return `Computer: ${computerScore} Player: ${playerScore} You have lost`;
+        }
+}
 
-rockPaperScissors(playerPlay(), computerPlay());
-
-
-
+function game() {
+        let computerScore = 0
+          , playerScore = 0;
+        for (let round = 1; round < 6; round++) {
+                switch (rockPaperScissors(playerPlay(), computerPlay())) {
+                        case 'tie':
+                                computerScore++;
+                                playerScore++;
+                                alert(`Round ${round} is a tie`);
+                                break;
+                        case 'You win':
+                                playerScore++;
+                                alert(`Round ${round} goes to player`);
+                                break;
+                        case 'You lose':
+                                computerScore++;
+                                alert(`Round ${round} goes to computer`);
+                                break;
+                }
+        }
+        return scoring(playerScore, computerScore);
+}
