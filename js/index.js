@@ -10,6 +10,10 @@ const playerScorediv = document.querySelector('.playerScore');
 const computerScorediv = document.querySelector('.computerScore')
 const roundDiv = document.querySelector('.round');
 const newGame = document.querySelector('#newGame');
+const outcomeDiv = document.querySelector('.outcomeDiv')
+const computerResult = document.createElement('button');
+const playerResult = document.createElement('button');
+const roundResults = document.querySelector('.roundResults');
 
 function computerPlay() {
         let computerSelection = Math.floor(Math.random()*3)+1;
@@ -71,6 +75,14 @@ function playRound(playerSelection, computerSelection = computerPlay()) {
         } else {
                 restartGame();
         }
+        
+        playerResult.removeAttribute('class')
+        playerResult.classList.add(`${playerSelection}`)
+        outcomeDiv.appendChild(playerResult);
+
+        computerResult.removeAttribute('class')
+        computerResult.classList.add(`${computerSelection}`)
+        outcomeDiv.appendChild(computerResult);
 }
 
 function endRound(result) {
@@ -91,6 +103,7 @@ function endRound(result) {
         }
         round++;
         updateScore();
+        roundResults.textContent = `${result}`
 }
 
 function updateScore() {
@@ -104,8 +117,10 @@ function updateScore() {
 
 function endGame() {
         gameState = false;
-        if (playerScore == 5) {
+        if (playerScore == 5 && computerScore != 5) {
                 roundDiv.textContent = `Player Wins! Start a new game?`
+        } else if (playerScore == 5 && computerScore == 5) {
+                roundDiv.textContent = `The game is a tie! Start a new game?`
         } else {
                 roundDiv.textContent = `Computer Wins! Start a new game?`
         }
